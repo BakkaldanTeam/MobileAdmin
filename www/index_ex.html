@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>Bakkaldan User</title>
+
+
+	    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+	    <script>
+			function initialize() {
+			  var myLatlng = new google.maps.LatLng(40.9873838,29.0487018);
+			  var mapOptions = {
+			    zoom: 16,
+			    center: myLatlng
+			  }
+			  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+			  var marker = new google.maps.Marker({
+			      position: myLatlng,
+			      map: map,
+			      title: 'Hello World!'
+			  });
+			}
+
+			google.maps.event.addDomListener(window, 'load', initialize);
+
+	    </script>
+
+    </head>
+    <body>
+
+        <div id="appHeader">
+	        <div>
+	        	<img id="appHeaderLogo" src="img/headerLogo.png">
+	        </div>
+	        <div id="appHeaderTitle" >
+	        	<img src="img/headerTitle.png" style="width:220px">
+	        </div>
+        </div>
+
+        <div class="app" class="mADivs" style="display:none" >
+            <h1>Bakkaldan User</h1>
+            <div id="deviceready" class="blink">
+                <p class="event listening">Connecting to Device</p>
+                <p class="event received">Device is Ready</p>
+            </div>
+        </div>
+
+        <div id="appLogin"  class="mADivs" style="display:block">
+        	<h1>İste, Gelsin</h1>
+        	<p>
+        		Birşey mi lazım ? 
+				<br>
+        		E-Postan ve şifrenle gir, bakkaldan sana gelsin .
+        	</p>
+        	<form>
+        		<input id="email"  name="email" type="text"  placeholder="E-Posta Adresi" >
+        		<input id="password"  name="password" type="password" placeholder="Şifre">
+        		<button type="button" onclick='$(".mADivs").hide();$("#appAddress").fadeIn();' > GİRİŞ YAP  </button>
+        	</form>
+        	<p style="cursor:pointer" onclick='$(".mADivs").hide();$("#appForgotPW").fadeIn();'>
+        		Şifremi Unuttum
+        	</p>
+        </div>
+
+        <div id="appForgotPW" class="mADivs" style="display:none">
+        	<h1>Şifrenizi mi unuttunuz ?</h1>
+        	<p>
+        		E-posta adresinizi girin, şifreniz gelsin
+        	</p>
+        	<form>
+        		<input id="forgotPW"  name="email" type="text"  placeholder="E-Posta Adresi" >
+
+        		<button type="button" style="margin-top:20px" onclick='$(".mADivs").hide();$("#appLogin").fadeIn();'> Şifremi Gönder  </button>
+        	</form>
+        </div>
+
+        <div id="appAddress"  class="mADivs" style="display:none">
+	        <div class="appInnerHeader">
+
+	        	<div class="appInnerHeaderItem aAHISelected"  onclick='$(".mADivs").hide();$("#appAddress").fadeIn();'>
+	        		<img style="  width: 25px;" src="img/address.png">
+	        	</div>
+
+	        	<div class="appInnerHeaderItem"  onclick='$(".mADivs").hide();$("#appSiparisVer").fadeIn();'>
+	        		<img style="  width: 25px;" src="img/cart.png">
+	        	</div>
+
+	        	<div class="appInnerHeaderItem"  onclick='$(".mADivs").hide();$("#appSiparislerim").fadeIn();'>
+	        		<img style="  width: 25px;" src="img/orders.png">
+	        	</div>
+	        	<h1 style="margin-top:15px">ADRESLERİM</h1>
+	        	<div>
+	        		<p>Kayıtlı adresiniz yok</p>
+
+					<button type="button" > ADRES EKLE  </button>
+
+	        	</div>
+				<div>
+
+	        		<div id="map-canvas"></div>
+
+					<button type="button" onclick="initialize()" > KONUMUMU AL  </button>
+
+					<p>TARİF</p>
+
+					<textarea id="map-tarif" placeholder="Örneğin; Taksi durağını geçince ilk sağ sokak 2. apartman gibi... "></textarea>
+
+					<button type="button" style> ADRESİ KAYDET  </button>
+
+
+	        	</div>
+	        </div>
+        </div>
+
+        <div id="appSiparisVer" class="mADivs" style="display:none">
+	        <div class="appInnerHeader">
+
+	        	<div class="appInnerHeaderItem "  onclick='$(".mADivs").hide();$("#appAddress").fadeIn();'>
+	        		<img style="  width: 25px;" src="img/address.png">
+	        	</div>
+
+	        	<div class="appInnerHeaderItem aAHISelected"  onclick='$(".mADivs").hide();$("#appSiparisVer").fadeIn();'>
+	        		<img style="  width: 25px;" src="img/cart.png">
+	        	</div>
+
+	        	<div class="appInnerHeaderItem"  onclick='$(".mADivs").hide();$("#appSiparislerim").fadeIn();'>
+	        		<img style="  width: 25px;" src="img/orders.png">
+	        	</div>
+
+		        <h1  style="margin-top:15px">DÜKKAN SEÇ</h1>
+
+		        <div>
+		        	<input id="telefon"  name="password" type="password" placeholder="Telefon Numarası" style="  width: 100%; text-align: left;margin: 10px 0px">
+					<br>
+		        	<textarea id="mySiparis" placeholder="Örneğin; 2 ekmek 1 gazete .." style="  width: 100%;  height: 100px;  text-align: left; margin: 10px 0px"></textarea>
+		        </div>
+
+		        <div>
+			        <div> DÜKKAN 1</div>
+			        <div> DÜKKAN 2</div>
+			        <div> DÜKKAN 3</div>
+			        <div> DÜKKAN 4</div>
+			        <div> DÜKKAN 5</div>
+		        </div>
+
+		        <button type="button" style="margin-top:15px"> Sipariş Ver  </button>
+	        </div>
+        </div>
+
+        <div id="appSiparislerim"  class="mADivs" style="display:none">
+	        <div class="appInnerHeader">
+
+	        	<div class="appInnerHeaderItem "  onclick='$(".mADivs").hide();$("#appAddress").fadeIn();'>
+	        		<img style="  width: 25px;" src="img/address.png">
+	        	</div>
+
+	        	<div class="appInnerHeaderItem "  onclick='$(".mADivs").hide();$("#appSiparisVer").fadeIn();'>
+	        		<img style="  width: 25px;" src="img/cart.png">
+	        	</div>
+
+	        	<div class="appInnerHeaderItem aAHISelected"  onclick='$(".mADivs").hide();$("#appSiparislerim").fadeIn();'>
+	        		<img style="  width: 25px;" src="img/orders.png">
+	        	</div>
+
+		        <h1  style="margin-top:15px">SİPARİŞLERİM</h1>
+
+	        	<div id="appEskiSiparis" >
+		        	<div id="siparisID123123" style="margin-top:15px">
+			        	<div>
+			        		<div style="display:inline-block;text-align:left;width:57%">EV ADRESIM</div>
+			        		<div style="display:inline-block;text-align:right;width:20%">15:15</div>
+			        		<div style="display:inline-block;text-align:right;width:20%">12/12/12</div>
+			        	</div>
+			        	<div style="text-align:left">
+			        		2 Ekmek, 1 kilo domates
+			        	</div>
+			       	</div>
+
+		        	<div id="siparisID123122" style="margin-top:15px">
+			        	<div>
+			        		<div style="display:inline-block;text-align:left;width:57%">EV ADRESIM</div>
+			        		<div style="display:inline-block;text-align:right;width:20%">15:15</div>
+			        		<div style="display:inline-block;text-align:right;width:20%">12/12/12</div>
+			        	</div>
+			        	<div style="text-align:left">
+			        		2 Ekmek, 1 kilo domates
+			        	</div>
+			       	</div>
+
+		        	<div id="siparisID123121" style="margin-top:15px">
+			        	<div>
+			        		<div style="display:inline-block;text-align:left;width:57%">EV ADRESIM</div>
+			        		<div style="display:inline-block;text-align:right;width:20%">15:15</div>
+			        		<div style="display:inline-block;text-align:right;width:20%">12/12/12</div>
+			        	</div>
+			        	<div style="text-align:left">
+			        		2 Ekmek, 1 kilo domates
+			        	</div>
+			       	</div>
+
+
+	        	</div>
+
+
+	        </div>
+
+        </div>
+
+        <!-- SCRIPTS -->
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+
+
+
+    </body>
+</html>
