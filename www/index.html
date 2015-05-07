@@ -49,7 +49,7 @@
 	    </script>
 	    <script>
 			function initializeSiparis() {
-			  var myLatlng = new google.maps.LatLng(GLatSiparis,GLngSiparis);
+			  var myLatlng = new google.maps.LatLng(0,0);
 			  var mapOptions = {
 			    zoom: 16,
 			    center: myLatlng,
@@ -66,6 +66,24 @@
 
 			google.maps.event.addDomListener(window, 'load', initializeSiparis);
 
+	    </script>
+	    <script>
+	    
+	     function toggleMe(orderDivId) {
+			 
+			 
+			 if($("#appOrder"+orderDivId+"Details").css("display")=="none"){
+			 	$(".appOrderDetails").slideUp(300);
+			 	$("#appOrder"+orderDivId+"Details").slideDown(300);
+			 }
+			 else{
+			 	$(".appOrderDetails").slideUp(300);
+			 	
+			 }
+    
+	     }
+	    
+	    
 	    </script>
  
     
@@ -440,7 +458,7 @@
 						
 						<div id="appOrder01">
 
-							<div id="appOrder01Title" onclick='$(".appOrderDetails").hide();$("#appOrder01Details").slideDown(300);'> 
+							<div id="appOrder01Title" onclick='toggleMe("01")'> 
 
 									<span id="appOrder01Store" style="font-weight:bold">FIRAT YÜKSEK </span>  
 									<span id="appOrder01Time" style="font-size: 0.7em;"> 17:09, 12/12/2015</span> 
@@ -474,7 +492,7 @@
 						
 						<div id="appOrder02">
 
-							<div id="appOrder02Title" onclick='$(".appOrderDetails").hide();$("#appOrder02Details").slideDown(300);'> 
+							<div id="appOrder02Title" onclick='toggleMe("02")'> 
 
 									<span id="appOrder02Store" style="font-weight:bold">FIRAT YÜKSEK </span>  
 									<span id="appOrder02Time" style="font-size: 0.7em;"> 17:09, 12/12/2015</span> 
@@ -507,7 +525,7 @@
 						
 						<div id="appOrder03">
 
-							<div id="appOrder03Title" onclick='$(".appOrderDetails").hide();$("#appOrder03Details").slideDown(300);'> 
+							<div id="appOrder03Title" onclick='toggleMe("03")'> 
 
 									<span id="appOrder03Store" style="font-weight:bold">FIRAT YÜKSEK </span>  
 									<span id="appOrder03Time" style="font-size: 0.7em;"> 17:09, 12/12/2015</span> 
