@@ -20,21 +20,26 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <!-- END  MANDATORY STYLE -->
     <script src="assets/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-    
+    	<script src="cordova.js"></script> 
+	<script src="js/index.js"></script>
+	<script type="text/javascript">
+            app.initialize();
+        </script>
  	    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 	    <script>
 			function initialize() {
-			  var myLatlng = new google.maps.LatLng(40.9873838,29.0487018);
+			  var myLatlng = new google.maps.LatLng(GLat,GLng);
 			  var mapOptions = {
 			    zoom: 16,
-			    center: myLatlng
+			    center: myLatlng,
+				draggable: false
 			  }
 			  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 			  var marker = new google.maps.Marker({
 			      position: myLatlng,
 			      map: map,
-			      title: 'Hello World!'
+			      title: 'Bakkal Haritası'
 			  });
 			}
 
@@ -66,16 +71,16 @@
                     <span><img src="assets/img/headerLogo.png" height="40px" style="margin-top:5px"></span>
                 </button>
                 <h1>
-                    <a class="navbar-brand" href="index.html" data-0="line-height:80px" data-300="line-height:58px">
+                    <a class="navbar-brand" href="javascript:void(0)" data-0="line-height:80px" data-300="line-height:58px">
                         <img src="assets/img/logo.png" data-0="line-height:80px" data-300="line-height:58px" alt="logo" width="180" height="29">
                     </a>
                 </h1>
             </div>
             <div class="navbar-collapse collapse" style="min-width: 250px;">
                 <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:7px;">
-                    <li><a>AD/SOYAD : FIRAT YUKSEK</a></li>
+                    <li><a>DÜKKAN : <span id="profilAdSoyad"></span></a></li>
                     <li> </li>
-                    <li><a>TELEFON : 5326546546</a></li>
+                    <li><a>TELEFON : <span id="profilTelefon"></span></a></li>
                     <li> </li>
                     <li class="active" style="float:right"><a href="#">Sign Out</a></li>
                 </ul>
@@ -84,7 +89,7 @@
     </div>
     <!-- END TOP NAVBAR-->
     <!-- BEGIN LOGIN SECTIONS -->
-    <section class="loginSections" style="margin-top: 110px;">
+    <section class="loginSections" style="margin-top: 110px;display:none">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
@@ -97,7 +102,7 @@
             </div>
         </div>
     </section>
-	<section class="loginSections" id="section-contact" class="section appear clearfix" style="  margin-top: -18px;">
+	<section class="loginSections" id="section-contact" class="section appear clearfix" style="  margin-top: -18px;display:none">
 	
 	
         <div id="appLoginView" class="container" style="display:block">
@@ -114,16 +119,16 @@
                         <div id="sendmessage">
                            Bakkaldan'a hoşgeldin ! .
                         </div>
-                        <form role="form" id="login-form" class="contactForm" data-parsley-validate>
+                        <form role="form" id="login-form" onsubmit="uyeKayit();return false;" class="contactForm"  data-parsley-validate >
                             <div class="form-group" style=" margin-bottom: 10px;">
                                 <label for="email">Eposta Adresin</label>
-                                <input class="form-control" name="email" id="email" placeholder="Eposta Adresin" data-parsley-group="contact-field" type="email" required />
+                                <input class="form-control" name="email" id="regEmail" placeholder="Eposta Adresin" data-parsley-group="contact-field" type="email" required />
                             </div>
                             <div class="form-group"  style=" margin-bottom: 10px;">
                                 <label for="password">Şifren</label>
-                                <input type="password" class="form-control" name="password" id="password" data-parsley-group="contact-field" placeholder="Şifren" data-parsley-minlength="6" required />
+                                <input type="password" class="form-control" name="password" id="regPassword" data-parsley-group="contact-field" placeholder="Şifren" data-parsley-minlength="6" required />
                             </div>
-                            <button id="appLoginButton" type="submit" class="btn btn-blue" style="width:100%" onclick='$(".loginSections").delay(1500).toggle(0); $(".inAppSection").delay(2500).fadeToggle(0)'>GİRİŞ YAP</button>
+                            <button id="appLoginButton" type="submit" class="btn btn-blue" style="width:100%">GİRİŞ YAP</button>
                         </form>
                     </div>
                 </div>
@@ -148,10 +153,10 @@
                         <div id="sendmessage">
                            Şifren e-posta adresine gönderildi bile .
                         </div>
-                        <form role="form" id="contact-form" class="contactForm" data-parsley-validate>
+                        <form role="form" id="contact-form" class="contactForm" data-parsley-validate onsubmit="sifremiUnuttum();return false;">
                             <div class="form-group">
                                 <label for="email">E-posta Adresin</label>
-                                <input class="form-control" name="email" id="email" placeholder="Eposta Adresin" data-parsley-group="contact-field" type="email" required />
+                                <input class="form-control" name="email" id="forgotEmail" placeholder="Eposta Adresin" data-parsley-group="contact-field" type="email" required />
                             </div>
                             <button id="appLoginButton" type="submit" class="btn btn-blue" style="width:100%" >ŞİFREMİ UNUTTUM</button>
                         </form>
@@ -179,14 +184,14 @@
                         <div id="sendmessage">
                            Bakkaldan'a hoşgeldin ! .
                         </div>
-                        <form role="form" id="signup-form" class="contactForm" data-parsley-validate>
+                        <form role="form" id="signup-form" class="contactForm" data-parsley-validate onclick="OnKayit();return false;">
                             <div class="form-group" style=" margin-bottom: 10px;">
                                 <label for="adSoyad">Ad, Soyad</label>
-                                <input type="text" class="form-control" name="adSoyad" id="adSoyad"  data-parsley-group="contact-field" placeholder="Ad, Soyad" data-parsley-minlength="5" required />
+                                <input type="text" class="form-control" name="adSoyad" id="onKayitAdSoyad"  data-parsley-group="contact-field" placeholder="Ad, Soyad" data-parsley-minlength="5" required />
                             </div>
                             <div class="form-group"  style=" margin-bottom: 10px;">
                                 <label for="phone">Telefon</label>
-                                <input type="text" class="form-control" name="phone" id="phone" data-parsley-group="contact-field" placeholder="53X XXX XX XX" data-parsley-minlength="10" required />
+                                <input type="text" class="form-control" name="phone" id="onKayitPhone" data-parsley-group="contact-field" placeholder="53X XXX XX XX" data-parsley-minlength="10" required />
                             </div>
                             <button id="appSignupButton" type="submit" class="btn btn-blue" style="width:100%" onclick=''>HEMEN BAŞVUR</button>
                         </form>
@@ -234,36 +239,26 @@
 								 <div style="margin-top:15px">
 								 	<p>
 									 	<span><b>Dükkan ID : </b></span>
-									 	<span>000000</span>
+									 	<span id="proDukkanId"></span>
 								 	</p>
 								 	<p>
 									 	<span><b>Dükkan Adı : </b></span>
-									 	<span>Bizim Bakkal</span>
+									 	<span id="proDukkanAdi" style="text-transform:capitalize"></span>
 								 	</p>								 
 								 	<p>
 									 	<span><b>Yetkili : </b></span>
-									 	<span>Necmi Bakkaloğlu</span>
+									 	<span id="proYetkiliAdi" style="text-transform:capitalize"></span>
 								 	</p>
 								 	<p>
 									 	<span><b>Telefon : </b></span>
-									 	<span>555 555 55 55</span>
+									 	<span id="proTelefon"></span>
 								 	</p>
 								 	<p>
 									 	<span><b>E-Posta : </b></span>
-									 	<span>necmi@bakkaldan.org</span>
+									 	<span id="proEmail"></span>
 								 	</p>								 
 								 </div>
-								 <hr>
-								 <div style="margin-top:15px">
-								 	<p>
-									 	<span><b>Toplam sipariş : </b></span>
-									 	<span>000000</span>
-								 	</p>
-								 	<p>
-									 	<span><b>Bu ay sipariş : </b></span>
-									 	<span>000000</span>
-								 	</p>
-								 </div>
+								 
 						     </div>
 					        
 				</div>
@@ -271,7 +266,7 @@
  <!-- -->
                <div id="appOrders" class="inAppTabs container" >
 		        <div id="appOrdersHeader" class="row" style="padding:0px 2%;">
-		            <div onclick='$(".inAppTabs").hide();$("#appAddress").fadeIn();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
+		            <div onclick='$(".inAppTabs").hide();$("#appAddress").fadeIn();initialize();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
 							<img src="assets/img/shop.png" style="width: 40px;">
 		            </div>
 		            <div onclick='' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;border-bottom-color:rgb(51, 51, 51);border-bottom-width:2px;  border-bottom-style:solid;">
@@ -357,7 +352,7 @@
    
              <div id="appShop" class="inAppTabs container" style="display:none">
 		        <div id="appShopHeader" class="row" style="padding:0px 2%;">
-		            <div onclick='$(".inAppTabs").hide();$("#appAddress").fadeIn();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
+		            <div onclick='$(".inAppTabs").hide();$("#appAddress").fadeIn();initialize();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
 							<img src="assets/img/shop.png" style="width: 40px;">
 		            </div>
 		            <div onclick='$(".inAppTabs").hide();$("#appOrders").fadeIn();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
@@ -369,14 +364,14 @@
 		        </div>
 				<div id="appShopBody" class="row" style="padding:0px 10%;margin-bottom:25px;">
 					<h1 style="margin: 10px 0px ">Sorun bildirimi</h1>
-					<div style="margin: 10px 0px 40px 0px"> Aşağıdaki formu doldurarak veya 0850-885-0682 'den arayarak sorun bildiriminde bulunabilirsiniz . </div>
+					<div style="margin: 10px 0px 40px 0px"> Aşağıdaki formu doldurarak sorun bildiriminde bulunabilirsiniz . </div>
 
-					<form role="form" id="siparis-form" class="contactForm" data-parsley-validate="" novalidate="">
+					<form role="form" id="siparis-form" class="contactForm" data-parsley-validate="" novalidate="" onsubmit="SorunBildir();return false;">
                         
                         
                         <div class="form-group" style="margin-bottom:0px">
                             <label for="message">Sorun Mesajı</label>
-                            <textarea id="addressDirection" class="form-control" name="addressDirection" rows="5" data-parsley-range="[10, 200]" data-parsley-group="contact-field" data-msg="lutfen sipariş giriniz" placeholder="Örn: 2 Ekmek, 1 Kola, 1 paket Sabun" required="" data-parsley-id="7058"></textarea>
+                            <textarea id="sorunFormu" class="form-control" name="sorunFormu" rows="5" data-parsley-range="[5, 200]" data-parsley-group="contact-field" data-msg="lutfen sipariş giriniz" placeholder="" required="" data-parsley-id="7058"></textarea>
                         </div>
 
 					
