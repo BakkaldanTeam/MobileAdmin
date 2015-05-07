@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js sidebar-large lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js sidebar-large lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js sidebar-large lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js sidebar-large"> <!--<![endif]-->
+
+<head>
+    <!-- BEGIN META SECTION -->
+    <meta charset="utf-8">
+    <title>BAKKALDAN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="" name="description" />
+    <meta content="themes-lab" name="author" />
+    <!-- END META SECTION -->
+    <!-- BEGIN MANDATORY STYLE -->
+    <link href="assets/css/icons/fontawesome/font-awesome.css" rel="stylesheet">
+    <link href="assets/css/icons/flaticons/flaticon.css" rel="stylesheet">
+    <link href="assets/plugins/owl-carousel/owl.carousel.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <!-- END  MANDATORY STYLE -->
+    <script src="assets/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <script  type="text/javascript" src="cordova.js"></script> 
+	<script type="text/javascript" src="js/PushNotification.js"></script>
+	<script type="text/javascript" src="js/PushCustom.js"></script>
+	<script  type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript">
+            app.initialize();
+        </script>
+ 	    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+	    <script>
+			function initialize() {
+			  var myLatlng = new google.maps.LatLng(GLat,GLng);
+			  var mapOptions = {
+			    zoom: 16,
+			    center: myLatlng,
+				draggable: false
+			  }
+			  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+			  var marker = new google.maps.Marker({
+			      position: myLatlng,
+			      map: map,
+			      title: 'Bakkal Haritası'
+			  });
+			}
+
+			google.maps.event.addDomListener(window, 'load', initialize);
+
+	    </script>
+ 
+    
+</head>
+
+<body style="font-family: sans-serif;">
+    <!-- BEGIN PRELOADER -->
+    <section class="preloader">
+        <div id="loading-animation">
+            <ul class="spinner">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+    </section>
+    <!-- END PRELOADER -->
+    <!-- BEGIN TOP NAVBAR-->
+    <div class="navbar navbar-fixed-top" role="navigation" data-0="line-height:85px; height:85px; background-color:rgba(43,46,51,0.3);" data-300="line-height:60px; height:60px; background-color:rgba(43,46,51,1);">
+        <div class="container">
+            <div class="navbar-header" style="background-color:#386eb7">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span><img src="assets/img/headerLogo.png" height="40px" style="margin-top:5px"></span>
+                </button>
+                <h1>
+                    <a class="navbar-brand" href="javascript:void(0)" data-0="line-height:80px" data-300="line-height:58px">
+                        <img src="assets/img/logo.png" data-0="line-height:80px" data-300="line-height:58px" alt="logo" width="180" height="29">
+                    </a>
+                </h1>
+            </div>
+            <div class="navbar-collapse collapse" style="min-width: 250px;">
+                <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:7px;">
+                    <li><a>DÜKKAN : <span id="profilAdSoyad"></span></a></li>
+                    <li> </li>
+                    <li><a>TELEFON : <span id="profilTelefon"></span></a></li>
+                    <li> </li>
+                    <li class="active" style="float:right"><a href="#">Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- END TOP NAVBAR-->
+    <!-- BEGIN LOGIN SECTIONS -->
+    <section class="loginSections" style="margin-top: 110px;display:none">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+
+                    <div class="align-center">
+                        <img src="assets/img/mainLogo.png" style="width:98px"><br>
+                        <h1 class="slogan" style="font-size:26px">DÜKKAN UYGULAMASI</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+	<section class="loginSections" id="section-contact" class="section appear clearfix" style="  margin-top: -18px;display:none">
+	
+	
+        <div id="appLoginView" class="container" style="display:block">
+            <div class="row m-b-20">
+                <div class="col-md-offset-3 col-md-6">
+                    <div class="section-header">
+                        <p>Tüm siparişlerin burada. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="cform">
+                        <div id="sendmessage">
+                           Bakkaldan'a hoşgeldin ! .
+                        </div>
+                        <form role="form" id="login-form" onsubmit="uyeKayit();return false;" class="contactForm"  data-parsley-validate >
+                            <div class="form-group" style=" margin-bottom: 10px;">
+                                <label for="email">Eposta Adresin</label>
+                                <input class="form-control" name="email" id="regEmail" placeholder="Eposta Adresin" data-parsley-group="contact-field" type="email" required />
+                            </div>
+                            <div class="form-group"  style=" margin-bottom: 10px;">
+                                <label for="password">Şifren</label>
+                                <input type="password" class="form-control" name="password" id="regPassword" data-parsley-group="contact-field" placeholder="Şifren" data-parsley-minlength="6" required />
+                            </div>
+                            <button id="appLoginButton" type="submit" class="btn btn-blue" style="width:100%">GİRİŞ YAP</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="notZaten" class="row" style="margin-top:25px;margin-bottom:25px;text-align:center">
+	            <div class="col-md-8 col-md-offset-2">
+            		<a href="javascript:void(0)" onclick='$("#appLoginView").toggle();$("#appSignupView").fadeToggle();'>Üye olmak istiyorum</a> - <a href="javascript:void(0)" onclick='$("#appLoginView").toggle();$("#forgotPasswordView").fadeToggle();'>Şifremi unuttum</a> 
+	            </div>
+            </div>
+        </div>
+        <div id="forgotPasswordView" class="container" style="display:none">
+            <div class="row m-b-20">
+                <div class="col-md-offset-3 col-md-6">
+                    <div class="section-header">
+                        <p>Şifreni mi unuttun ? E-posta adresini gir, gönderelim. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="cform">
+                        <div id="sendmessage">
+                           Şifren e-posta adresine gönderildi bile .
+                        </div>
+                        <form role="form" id="contact-form" class="contactForm" data-parsley-validate onsubmit="sifremiUnuttum();return false;">
+                            <div class="form-group">
+                                <label for="email">E-posta Adresin</label>
+                                <input class="form-control" name="email" id="forgotEmail" placeholder="Eposta Adresin" data-parsley-group="contact-field" type="email" required />
+                            </div>
+                            <button id="appLoginButton" type="submit" class="btn btn-blue" style="width:100%" >ŞİFREMİ UNUTTUM</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:25px;margin-bottom:25px;text-align:center">
+                <div class="col-md-8 col-md-offset-2">
+					<a href="javascript:void(0)" onclick='$("#forgotPasswordView").toggle();$("#appLoginView").fadeToggle();'>Yok yok unutmadım</a>
+                </div>
+            </div>
+
+        </div>
+         <div id="appSignupView" class="container" style="display:none">
+            <div class="row m-b-20">
+                <div class="col-md-offset-3 col-md-6">
+                    <div class="section-header">
+                        <p>Tüm siparişlerin burada. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="cform">
+                        <div id="sendmessage">
+                           Bakkaldan'a hoşgeldin ! .
+                        </div>
+                        <form role="form" id="signup-form" class="contactForm" data-parsley-validate onclick="OnKayit();return false;">
+                            <div class="form-group" style=" margin-bottom: 10px;">
+                                <label for="adSoyad">Ad, Soyad</label>
+                                <input type="text" class="form-control" name="adSoyad" id="onKayitAdSoyad"  data-parsley-group="contact-field" placeholder="Ad, Soyad" data-parsley-minlength="5" required />
+                            </div>
+                            <div class="form-group"  style=" margin-bottom: 10px;">
+                                <label for="phone">Telefon</label>
+                                <input type="text" class="form-control" name="phone" id="onKayitPhone" data-parsley-group="contact-field" placeholder="53X XXX XX XX" data-parsley-minlength="10" required />
+                            </div>
+                            <button id="appSignupButton" type="submit" class="btn btn-blue" style="width:100%" onclick=''>HEMEN BAŞVUR</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="isZaten" class="row" style="margin-top:25px;margin-bottom:25px;text-align:center; ">
+                <div class="col-md-8 col-md-offset-2">
+					<a href="javascript:void(0)" onclick='$("#appSignupView").toggle();$("#appLoginView").fadeToggle();'>Zaten Üyeyim</a>
+                </div>
+            </div>
+        </div>   
+    
+    
+    
+    
+    
+    </section>
+    <!-- END LOGIN SECTIONS -->
+    <!-- BEGIN INAPP SECTIONS -->
+
+
+
+    <section class="inAppSection" style="margin-top: 110px;display:none">
+
+ <!-- -->  
+            <div id="appAddress" class="inAppTabs container" style="display:none">
+		        <div id="appAddressHeader" class="row" style="padding:0px 2%;">
+		            <div onclick='' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;border-bottom-color:rgb(51, 51, 51);border-bottom-width:2px;  border-bottom-style:solid;">
+							<img src="assets/img/shop.png" style="width: 40px;">
+		            </div>
+		            <div onclick='$(".inAppTabs").hide();$("#appOrders").fadeIn();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
+							<img src="assets/img/orders.png" style="width: 40px;">
+		            </div>
+		            <div onclick='$(".inAppTabs").hide();$("#appShop").fadeIn();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
+							<img src="assets/img/contact.png" style="width: 40px;">
+		            </div>
+		        </div>
+				<div id="appAddressBody" class="row" style="padding:0px 10%;margin-bottom:25px;">
+							<h1 style="margin: 10px 0px">Dükkanın</h1>
+					        <div id="noMapText" style="margin: 10px 0px 40px 0px"> Dükkanın hakkında bilgiler</div>
+						     
+						     <div id="addNewAddress" style="margin-top:15px">
+								 <div id="map-canvas" style="width:100%;height:255px;"></div>
+								 <div style="margin-top:15px">
+								 	<p>
+									 	<span><b>Dükkan ID : </b></span>
+									 	<span id="proDukkanId"></span>
+								 	</p>
+								 	<p>
+									 	<span><b>Dükkan Adı : </b></span>
+									 	<span id="proDukkanAdi" style="text-transform:capitalize"></span>
+								 	</p>								 
+								 	<p>
+									 	<span><b>Yetkili : </b></span>
+									 	<span id="proYetkiliAdi" style="text-transform:capitalize"></span>
+								 	</p>
+								 	<p>
+									 	<span><b>Telefon : </b></span>
+									 	<span id="proTelefon"></span>
+								 	</p>
+								 	<p>
+									 	<span><b>E-Posta : </b></span>
+									 	<span id="proEmail"></span>
+								 	</p>								 
+								 </div>
+								 
+						     </div>
+					        
+				</div>
+            </div>
+ <!-- -->
+               <div id="appOrders" class="inAppTabs container" >
+		        <div id="appOrdersHeader" class="row" style="padding:0px 2%;">
+		            <div onclick='$(".inAppTabs").hide();$("#appAddress").fadeIn();initialize();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
+							<img src="assets/img/shop.png" style="width: 40px;">
+		            </div>
+		            <div onclick='' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;border-bottom-color:rgb(51, 51, 51);border-bottom-width:2px;  border-bottom-style:solid;">
+							<img src="assets/img/orders.png" style="width: 40px;">
+		            </div>
+		            <div onclick='$(".inAppTabs").hide();$("#appShop").fadeIn();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
+							<img src="assets/img/contact.png" style="width: 40px;">
+		            </div>
+		        </div>
+				<div id="appOrdersBody" class="row" style="padding:0px 10%;margin-bottom:25px">
+					<h1 style="margin: 10px 0px">Siparişlerin</h1>
+					<div style="margin: 10px 0px  40px 0px"> Önceki siparişlerinin hepsi burada</div>
+					<div id="appOrdersList" style="margin: 10px 0px"> 
+						
+						
+						<div id="appOrder01"  style="  padding: 10px 0px;  border-bottom-color: rgb(119, 119, 119);  border-bottom-style: solid;  border-bottom-width: 1px;">
+							<div id="appOrder01Cancel" style="display:inline-block">
+								<button class="btn" style="margin: -4px 5px 0px 0px;background-color:#D94200;color:#fff;height:22px;padding:0px 5px;"> X </button>
+							</div>
+							<div id="appOrder01Title"  style="display:inline-block" > 
+
+									<span id="appOrder01Store" style="font-weight:bold">FIRAT YÜKSEK </span>  
+									<span id="appOrder01Time" style="font-size: 0.7em;"> 17:09, 12/12/2015</span> 
+									<span id="appOrder01Status">
+										<img style="width:14px;vertical-align:initial;" src="assets/img/check.png">
+									</span>
+ 
+								
+							</div>
+							<div id="appOrder01Details" class="appOrderDetails" style="font-size: 0.7em;padding-left:20px"> 
+								<b> 555 555 5555 - </b> 2 Ekmek, 1 Kola, 1 Paket Şeker 
+								<div>
+								
+								</div>
+							</div>
+						</div>
+						
+						
+						<div id="appOrder02"  style="  padding: 10px 0px;  border-bottom-color: rgb(119, 119, 119);  border-bottom-style: solid;  border-bottom-width: 1px;">
+							<div id="appOrder02Cancel" style="display:inline-block">
+
+							</div>
+							
+							<div id="appOrder02Title" style="display:inline-block" > 
+
+									<span id="appOrder02Store" style="font-weight:bold">Güzel Şarküteri</span>   
+									<span id="appOrder02Time" style="font-size: 0.7em;"> 17:09, 12/12/2015</span> 
+									<span id="appOrder02Status">
+										<img  style="width:14px;vertical-align:initial;"  src="assets/img/check.png">
+										<img  style="width:14px;vertical-align:initial;"  src="assets/img/check.png">
+									</span> 
+
+							</div>
+							<div id="appOrder02Details" class="appOrderDetails" style="font-size: 0.7em;padding-left:20px"> 
+								<b>Adres 1 - </b> 1 Gazete, 1 Ekmek, 1 kg Peynir, yarım kilo zeytin
+							</div>
+						</div>					
+					
+						<div id="appOrder03"  style="  padding: 10px 0px;  border-bottom-color: rgb(119, 119, 119);  border-bottom-style: solid;  border-bottom-width: 1px;">
+							<div id="appOrder03Cancel" style="display:inline-block">
+
+							</div>
+							<div id="appOrder03Title" style="display:inline-block" > 
+
+									<span id="appOrder03Store" style="font-weight:bold">Yan Kasap</span>   
+									<span id="appOrder03Time" style="font-size: 0.7em;"> 17:09, 12/12/2015</span> 
+									<span id="appOrder03Status">
+										<img  style="width:14px;vertical-align:initial;"  src="assets/img/check.png">
+										<img  style="width:14px;vertical-align:initial;"  src="assets/img/check.png">
+									</span> 
+
+							</div>
+							<div id="appOrder03Details" class="appOrderDetails" style="font-size: 0.7em;padding-left:20px"> 
+								<b>Adres 1 - </b> 1 kilo dana kıyma
+							</div>
+						</div>						
+					
+					</div>
+					
+				</div>
+            </div>
+ <!-- -->
+   
+             <div id="appShop" class="inAppTabs container" style="display:none">
+		        <div id="appShopHeader" class="row" style="padding:0px 2%;">
+		            <div onclick='$(".inAppTabs").hide();$("#appAddress").fadeIn();initialize();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
+							<img src="assets/img/shop.png" style="width: 40px;">
+		            </div>
+		            <div onclick='$(".inAppTabs").hide();$("#appOrders").fadeIn();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
+							<img src="assets/img/orders.png" style="width: 40px;">
+		            </div>
+		            <div onclick='' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;border-bottom-color:rgb(51, 51, 51);border-bottom-width:2px;  border-bottom-style:solid;">
+							<img src="assets/img/contact.png" style="width: 40px;">
+		            </div>
+		        </div>
+				<div id="appShopBody" class="row" style="padding:0px 10%;margin-bottom:25px;">
+					<h1 style="margin: 10px 0px ">Sorun bildirimi</h1>
+					<div style="margin: 10px 0px 40px 0px"> Aşağıdaki formu doldurarak sorun bildiriminde bulunabilirsiniz . </div>
+
+					<form role="form" id="siparis-form" class="contactForm" data-parsley-validate="" novalidate="" onsubmit="SorunBildir();return false;">
+                        
+                        
+                        <div class="form-group" style="margin-bottom:0px">
+                            <label for="message">Sorun Mesajı</label>
+                            <textarea id="sorunFormu" class="form-control" name="sorunFormu" rows="5" data-parsley-range="[5, 200]" data-parsley-group="contact-field" data-msg="lutfen sipariş giriniz" placeholder="" required="" data-parsley-id="7058"></textarea>
+                        </div>
+
+					
+						<button type="submit" class="btn btn-blue " style="width:100%">BİLDİR</button>
+					
+					</form> 
+				
+				
+				
+				
+				</div>
+            </div>  
+ <!-- -->    
+
+  
+   
+    </section>
+    <!-- END INAPP SECTIONS -->   
+    <!-- BEGIN FOOTER -->
+    <section id="footer" class="section footer" style="display:none">
+        <div class="container">
+            <div class="row animated opacity m-b-20" data-andown="fadeIn" data-animation="animation">
+                <div class="col-sm-12 align-center">
+                    <ul class="social-network social-circle">
+                        <li><a href="#" class="icoRss" title="Rss"><i class="fa fa-rss"></i></a>
+                        </li>
+                        <li><a href="#" class="icoFacebook" title="Facebook"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li><a href="#" class="icoTwitter" title="Twitter"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li><a href="#" class="icoGoogle" title="Google +"><i class="fa fa-google-plus"></i></a>
+                        </li>
+                        <li><a href="#" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row align-center copyright">
+                <div class="col-sm-12">
+                    <p>Copyright &copy; SagClick</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- END FOOTER -->
+    <!-- BEGIN MANDATORY SCRIPTS -->
+    <script src="assets/plugins/jquery-1.11.js"></script>
+    <script src="assets/plugins/bootstrap.min.js"></script>
+    <script src="assets/plugins/owl-carousel/owl.carousel.min.js"></script>
+    <script src="assets/plugins/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="assets/plugins/skrollr/skrollr.min.js"></script>
+    <script src="assets/plugins/jquery-scrollto/jquery.scrollTo-1.4.3.1-min.js"></script>
+    <script src="assets/plugins/jquery-appear/jquery.appear.js"></script>
+    <!-- END MANDATORY SCRIPTS -->
+    <!-- BEGIN PAGE PLUGIN SCRIPTS -->
+    <script src="assets/plugins/parsley/parsley.js"></script>
+
+
+
+    <!-- END PAGE PLUGIN SCRIPTS -->
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

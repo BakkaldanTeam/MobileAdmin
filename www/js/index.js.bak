@@ -20,12 +20,6 @@
  var GLat = null;
  var GLng = null;
  
-
-window.alert = function(){
-	var text =;
-	navigator.notification.alert( arguments[0], null, "Bakkaldan Uyarı", "OK");
-}
-
 var app = {
     // Application Constructor
     initialize: function() {
