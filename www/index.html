@@ -76,9 +76,8 @@
 			 	$(".appOrderDetails").slideUp(300);
 			 	$("#appOrder"+orderDivId+"Details").slideDown(300);
 			 }
-			 else{
+			 else if($("#appOrder"+orderDivId+"Details").css("display")=="block"){
 			 	$(".appOrderDetails").slideUp(300);
-			 	
 			 }
     
 	     }
@@ -255,6 +254,7 @@
 
 
     <section class="inAppSection" style="margin-top: 110px;display:none">
+    <div id="openClosed" style="position: absolute;right: 5%;margin-top: 60px;"><img src="assets/img/open.png"></div>
 
  <!-- -->  
             <div id="appAddress" class="inAppTabs container" style="display:none">
@@ -270,7 +270,7 @@
 		            </div>
 		        </div>
 				<div id="appAddressBody" class="row" style="padding:0px 10%;margin-bottom:25px;">
-							<h1 style="margin: 10px 0px">Dükkanın</h1>
+							<h1 style="margin: 10px 0px">Dükkanın </h1>
 					        <div id="noMapText" style="margin: 10px 0px 40px 0px"> Dükkanın hakkında bilgiler</div>
 						     
 						     <div id="addNewAddress" style="margin-top:15px">
