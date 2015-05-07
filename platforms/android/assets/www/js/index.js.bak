@@ -16,6 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+ 
+ var GLat = null;
+ var GLng = null;
+ 
 var app = {
     // Application Constructor
     initialize: function() {
@@ -37,26 +41,161 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
+       /* var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
 
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
-		document.getElementById("deviceInfo").innerHTML = device.platform;
-		
-		var postData = '{"aksiyon":"kurGetir","data":{"":""}}';
-		console.log(postData);
-		$.post("https://www.kargoweb.com/KGWBCRM/com/kargoweb/DEBUG/debugger.php", { bilgi: postData}).done(
-			function(data){
-				//console.log(data); 
-				var sonuc = JSON.parse(data);
-				if(sonuc.response==true){
-					alert("Kargoweb API Kur:" + sonuc.data);
-					$("#deviceInfo").html("Kargoweb API Kur:" + sonuc.data);
-				}
-			}
-		);
+
         console.log('Received Event: ' + id);
+
+		*/
+
+		
+
+		if(window.localStorage.getItem("email")!=null && window.localStorage.getItem("password")!=null){
+			var email = window.localStorage.getItem("email");
+			var password = window.localStorage.getItem("password");
+			
+			uyeKayit(email,password);
+		}
+		else{
+			$(".loginSections").show();
+		}
     }
 };
+
+
+function uyeKayit(email,password){
+
+	var email = (email===undefined) ? document.getElementById("regEmail").value : email;
+	var password = (password===undefined) ? document.getElementById("regPassword").value : password;
+	var deviceModel = device.model;
+	var deviceCordova = device.cordova;
+	var devicePlatform = device.platform;
+	var deviceId = device.uuid;
+	var deviceVersion = device.version;
+
+	var postData = '{"aksiyon":"uyeKayit","data":{"memberType":"operator","email":"'+email+'","password":"'+password+'","deviceModel":"'+deviceModel+'","deviceCordova":"'+deviceCordova+'","devicePlatform":"'+devicePlatform+'","deviceId":"'+deviceId+'","deviceVersion":"'+deviceVersion+'"}}';
+
+	
+	$.post("http://www.sagclick.com/BAKKALDAN/com/bakkaldan/DEBUG/debugger.php", { bilgi: postData}).done(
+	function(data){
+		var sonuc = JSON.parse(data);
+		if(sonuc.response==true){
+			$(".loginSections").hide();
+			window.localStorage.setItem("email", email);
+			window.localStorage.setItem("password", password);
+			profilBilgilerim();
+			
+		}
+		else{
+			window.localStorage.removeItem("email");
+			window.localStorage.removeItem("password");
+			$(".loginSections").show();
+		}
+	}
+	);
+}
+
+
+
+function sifremiUnuttum(){
+
+	var email = document.getElementById("forgotEmail").value;
+
+	var postData = '{"aksiyon":"sifremiUnuttum","data":{"memberType":"operator","email":"'+email+'"}}';
+
+	
+	$.post("http://www.sagclick.com/BAKKALDAN/com/bakkaldan/DEBUG/debugger.php", { bilgi: postData}).done(
+	function(data){
+	
+		var sonuc = JSON.parse(data);
+		if(sonuc.response==true){
+			alert("Şifreni e-posta adresine gönderdik.");
+		}
+		else{
+			alert("Bir hata oluştu, lütfen tekrar dene.");
+		}
+	}
+	);
+}
+function cikisYap(){
+
+
+	var postData = '{"aksiyon":"guvenliCikis","data":{"":""}}';
+
+	
+	$.post("http://www.sagclick.com/BAKKALDAN/com/bakkaldan/DEBUG/debugger.php", { bilgi: postData}).done(
+	function(data){
+		
+		var sonuc = JSON.parse(data);
+		if(sonuc.response==true){
+			window.localStorage.removeItem("email");
+			window.localStorage.removeItem("password");
+			document.location = "index.html";
+		}
+		else{
+			//	alert("Bir hata oluştu, lütfen tekrar dene.");
+
+		}
+	}
+	);
+}
+function profilBilgilerim(){
+
+
+	var postData = '{"aksiyon":"profilBilgilerim","data":{"":""}}';
+
+	
+	$.post("http://www.sagclick.com/BAKKALDAN/com/bakkaldan/DEBUG/debugger.php", { bilgi: postData}).done(
+		function(data){
+			
+			var sonuc = JSON.parse(data);
+			if(sonuc.response==true){
+				$("#profilAdSoyad").html(sonuc.data.firstName+" "+sonuc.data.lastName);
+				$("#profilTelefon").html(sonuc.data.phone);
+				if(sonuc.data.state=="aktif"){
+			
+					$(".inAppSection").fadeToggle(0);
+					$("#proDukkanId").html("BKL"+sonuc.data.userId);
+					$("#proDukkanAdi").html(sonuc.data.firstName+" "+sonuc.data.lastName);
+					$("#proYetkiliAdi").html(sonuc.data.personnel);
+					$("#proTelefon").html(sonuc.data.phone);
+					$("#proEmail").html(sonuc.data.email);
+					GLat = sonuc.data.shopLat;
+					GLng = sonuc.data.shopLng;
+					
+					
+					
+					
+				}
+				else $(".loginSections").show();
+			}
+			else{
+				$(".loginSections").show();
+			}
+		}
+	);
+}
+
+function SorunBildir(){
+	var sorun = $("#sorunFormu").val();
+	var postData = '{"aksiyon":"sorunBildir","data":{"message":"'+sorun+'"}}';
+
+	
+	$.post("http://www.sagclick.com/BAKKALDAN/com/bakkaldan/DEBUG/debugger.php", { bilgi: postData}).done(
+		function(data){
+			var sonuc = JSON.parse(data);
+			if(sonuc.response==true){
+				alert("Sorununuz başarıyla iletildi.");
+				$("#sorunFormu").val('');
+			}
+			else{
+				alert("Bir problem oluştu. Lütfen daha sonra tekrar deneyiniz.");
+			}
+		}
+	);
+	
+}
