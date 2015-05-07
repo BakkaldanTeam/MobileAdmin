@@ -28,12 +28,12 @@
     <preference name="android-installLocation" value="auto" />
 	<preference name="SplashScreenDelay" value="10000" />
 	
-	<gap:plugin name="org.apache.cordova.device" version="0.3.0" />
-	<gap:plugin name="org.apache.cordova.geolocation" version="0.3.12" />
-	<gap:plugin name="org.apache.cordova.splashscreen" version="1.0.0" />
-	<gap:plugin name="com.phonegap.plugins.PushPlugin" version="2.4.0"/>
-	<gap:plugin name="org.apache.cordova.vibration" version="0.3.13" />
-	<gap:plugin name="org.apache.cordova.dialogs" version="0.3.0"/>
+	<gap:plugin name="org.apache.cordova.device" />
+	<gap:plugin name="org.apache.cordova.geolocation"/>
+	<gap:plugin name="org.apache.cordova.splashscreen" />
+	<gap:plugin name="com.phonegap.plugins.PushPlugin" />
+	<gap:plugin name="org.apache.cordova.vibration" />
+	<gap:plugin name="org.apache.cordova.dialogs" />
 	
     <icon src="icon.png" />
     <icon gap:platform="android" gap:qualifier="ldpi" src="www/res/icon/android/icon-36-ldpi.png" />
