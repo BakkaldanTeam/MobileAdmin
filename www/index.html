@@ -254,7 +254,7 @@
 
 
     <section class="inAppSection" style="margin-top: 110px;display:none">
-    <div id="openClosed" style="position: absolute;right: 5%;margin-top: 60px;"><img src="assets/img/open.png"></div>
+    <div id="openClosed" style="position: absolute;right: 5%;margin-top: 60px;"><img id="tabela" src="assets/img/open.png"></div>
 
  <!-- -->  
             <div id="appAddress" class="inAppTabs container" style="display:none">
@@ -303,27 +303,27 @@
 								 	<p>
 									 	<span>Açılış : </span>
 									 	<span style="margin-left:30px">
-											 <select>
-											  <option value="0000">00:00</option>
-											  <option value="0030">00:30</option>
-											  <option value="0100">01:00</option>
-											  <option value="0130">01:30</option>
-											  <option value="0200">02:00</option>
-											  <option value="0230">02:30</option>
-											  <option value="0300">03:00</option>
-											  <option value="0330">03:30</option>
-											  <option value="0400">04:00</option>
-											  <option value="0430">04:30</option>
-											  <option value="0500">05:00</option>
-											  <option value="0530">05:30</option>
-											  <option value="0600">06:00</option>
-											  <option value="0630">06:30</option>
-											  <option value="0700">07:00</option>
-											  <option value="0730">07:30</option>
-											  <option value="0800">08:00</option>
-											  <option value="0830">08:30</option>
-											  <option value="0900">09:00</option>
-											  <option value="0930" selected>09:30</option>
+											 <select id="basSaat">
+											  <option value="0">00:00</option>
+											  <option value="30">00:30</option>
+											  <option value="100">01:00</option>
+											  <option value="130">01:30</option>
+											  <option value="200">02:00</option>
+											  <option value="230">02:30</option>
+											  <option value="300">03:00</option>
+											  <option value="330">03:30</option>
+											  <option value="400">04:00</option>
+											  <option value="430">04:30</option>
+											  <option value="500">05:00</option>
+											  <option value="530">05:30</option>
+											  <option value="600">06:00</option>
+											  <option value="630">06:30</option>
+											  <option value="700">07:00</option>
+											  <option value="730">07:30</option>
+											  <option value="800">08:00</option>
+											  <option value="830">08:30</option>
+											  <option value="900">09:00</option>
+											  <option value="930">09:30</option>
 											  <option value="1000">10:00</option>
 											  <option value="1030">10:30</option>
 											  <option value="1100">11:00</option>
@@ -355,33 +355,33 @@
 											</select>
 									 	</span>
 									 	<span style="margin-left:10px">
-									 		<button class="btn" style="background-color:#429DFC;color:#fff;height:22px;padding:0px 5px;"> Güncelle </button>
+									 		<button class="btn" onclick="AcikKapaliAyarlariGuncelle()" style="background-color:#429DFC;color:#fff;height:22px;padding:0px 5px;"> Güncelle </button>
 									 	</span>
 								 	</p>
 								 	<p>
 									 	<span>Kapanış : </span>
 									 	<span style="margin-left:10px">
-											 <select>
-											  <option value="0000">00:00</option>
-											  <option value="0030">00:30</option>
-											  <option value="0100">01:00</option>
-											  <option value="0130">01:30</option>
-											  <option value="0200">02:00</option>
-											  <option value="0230">02:30</option>
-											  <option value="0300">03:00</option>
-											  <option value="0330">03:30</option>
-											  <option value="0400">04:00</option>
-											  <option value="0430">04:30</option>
-											  <option value="0500">05:00</option>
-											  <option value="0530">05:30</option>
-											  <option value="0600">06:00</option>
-											  <option value="0630">06:30</option>
-											  <option value="0700">07:00</option>
-											  <option value="0730">07:30</option>
-											  <option value="0800">08:00</option>
-											  <option value="0830">08:30</option>
-											  <option value="0900">09:00</option>
-											  <option value="0930">09:30</option>
+											 <select id="bitSaat">
+											  <option value="0">00:00</option>
+											  <option value="30">00:30</option>
+											  <option value="100">01:00</option>
+											  <option value="130">01:30</option>
+											  <option value="200">02:00</option>
+											  <option value="230">02:30</option>
+											  <option value="300">03:00</option>
+											  <option value="330">03:30</option>
+											  <option value="400">04:00</option>
+											  <option value="430">04:30</option>
+											  <option value="500">05:00</option>
+											  <option value="530">05:30</option>
+											  <option value="600">06:00</option>
+											  <option value="630">06:30</option>
+											  <option value="700">07:00</option>
+											  <option value="730">07:30</option>
+											  <option value="800">08:00</option>
+											  <option value="830">08:30</option>
+											  <option value="900">09:00</option>
+											  <option value="930">09:30</option>
 											  <option value="1000">10:00</option>
 											  <option value="1030">10:30</option>
 											  <option value="1100">11:00</option>
@@ -401,7 +401,7 @@
 											  <option value="1800">18:00</option>
 											  <option value="1830">18:30</option>
 											  <option value="1900">19:00</option>
-											  <option value="1930" selected>19:30</option>
+											  <option value="1930">19:30</option>
 											  <option value="2000">20:00</option>
 											  <option value="2030">20:30</option>
 											  <option value="2100">21:00</option>
@@ -413,21 +413,23 @@
 											</select>
 									 	</span>
 									 	<span style="margin-left:10px">
-									 		<button class="btn" style="background-color:#429DFC;color:#fff;height:22px;padding:0px 5px;"> Güncelle </button>
+									 		<button class="btn" onclick="AcikKapaliAyarlariGuncelle()" style="background-color:#429DFC;color:#fff;height:22px;padding:0px 5px;"> Güncelle </button>
 									 	</span>
 								 	</p>
 								 	<hr>								 	
 								 	<p>
-								 		<button type="submit" class="btn btn-blue " style="width:100%;background-color:#693917">BU GÜNLÜK KAPAT</button>
+										<span id="gunluk" style="display:none">0</span>
+								 		<button class="btn btn-blue " id="gunlukBtn" onclick="AcikKapaliAyarlariGuncelle('gunluk')" style="width:100%;background-color:#693917"></button>
 								 	</p>
 								 	<p style="font-size: 0.8em;text-align:center">
 								 		! Dükkan ertesi sabah otomatik açılır ! 
 								 	</p>
 								 	<hr>								 	
 								 	<p>
-								 		<button type="submit" class="btn btn-blue " style="width:100%;background-color:#000000">DÜKKANI KAPAT</button>
+										<span id="komple" style="display:none">0</span>
+								 		<button class="btn btn-blue " id="kompleBtn" onclick="AcikKapaliAyarlariGuncelle('komple')" style="width:100%;background-color:#000000"></button>
 								 	</p>
-								 	<p style="font-size: 0.8em;text-align:center">
+								 	<p style="font-size: 0.8em;text-align:center" >
 								 		! Dükkan sen açana kadar KAPALI kalır ! 
 								 	</p>								 
 								 </div>																 
