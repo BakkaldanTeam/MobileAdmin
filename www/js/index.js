@@ -286,7 +286,9 @@ function profilBilgilerim(param){
 					GLat = sonuc.data.shopLat;
 					GLng = sonuc.data.shopLng;
 					closedCheck();
+				
 					if(myInterval==null) myInterval = setInterval(closedCheck, 60000);
+					SiparislerimiGetir();
 					
 				}
 				else $(".loginSections").show();
@@ -360,17 +362,109 @@ function AcikKapaliAyarlariGuncelle(param){
 		}
 	);
 	
+}
+
+function closedCheck(){
+	var d = new Date();
+	var n = d.getHours(); 
+	var m = d.getMinutes()
+	var timeCheckVar = n+""+m;
 	
-	function closedCheck(){
-		var d = new Date();
-		var n = d.getHours(); 
-		var m = d.getMinutes()
-		var timeCheckVar = n+""+m;
-		
-		if(timeCheckVar==shopOpenG) $("#tabela").prop("src","assets/img/open.png");
-		else if(timeCheckVar==shopCloseG) $("#tabela").prop("src","assets/img/closed.png");
-		
-	}
-	
+	if(timeCheckVar==shopOpenG) $("#tabela").prop("src","assets/img/open.png");
+	else if(timeCheckVar==shopCloseG) $("#tabela").prop("src","assets/img/closed.png");
+	SiparislerimiGetir();
 	
 }
+	
+	
+function SiparislerimiGetir(){
+	
+	var postData = '{"aksiyon":"siparislerimiGetir","data":{"":""}}';
+	
+	$.post("http://www.sagclick.com/BAKKALDAN/com/bakkaldan/DEBUG/debugger.php", { bilgi: postData}).done(
+	function(data){
+		$("#appOrdersList").html('Siparişler yükleniyor.');
+		var sonuc = JSON.parse(data);
+		if(sonuc.response==true){
+			
+			$("#appOrdersList").html('');
+			for(var i=0;i<sonuc.data.length;i++){
+				
+				var checkStr = "";
+				if(sonuc.data[i].siparisDurumu=='gOnay'){
+					checkStr = checkStr + '<img style="width:14px;vertical-align:initial;" src="assets/img/check.png">';
+
+				}
+				else if(sonuc.data[i].siparisDurumu=='aIptal'){
+					checkStr = checkStr + '<img style="width:14px;vertical-align:initial;" src="assets/img/check.png">';
+					checkStr = checkStr + '<img style="width:14px;vertical-align:initial;" src="assets/img/cross.png">';
+
+				}
+				else if(sonuc.data[i].siparisDurumu=='aOnay'){
+					checkStr = checkStr + '<img style="width:14px;vertical-align:initial;" src="assets/img/check.png">';
+					checkStr = checkStr + '<img style="width:14px;vertical-align:initial;" src="assets/img/check.png">';
+
+				}
+				else if(sonuc.data[i].siparisDurumu=='gIptal'){
+					checkStr = checkStr + '<img style="width:14px;vertical-align:initial;" src="assets/img/cross.png">';
+
+				}
+			
+				var appendText = OrderFill(sonuc.data[i].siparisId,sonuc.data[i].kullaniciBaslik,sonuc.data[i].siparisZamani,checkStr,sonuc.data[i].kullaniciTel,sonuc.data[i].siparisIcerik,sonuc.data[i].gonderenAdresTarif,sonuc.data[i].siparisDurumu,sonuc.data[i].adresLat,sonuc.data[i].adresLng);
+				$("#appOrdersList").append(appendText);
+					
+			}
+		}
+		else{
+			$("#appOrdersList").html('');
+			//alert("Bir hata oluştu, lütfen tekrar dene.");
+		}
+	}
+	);
+}
+
+
+function OrderFill(id,name,date,checkStr,phone,details,directions,status,lat,lng){
+	var statusStr ="";
+	
+	if(status=="gOnay") statusStr = '<div style="margin-top:15px;text-align: center;"> <div  style="display:inline-block;width:49%"><button class="btn" style="background-color:#D94200;color:#fff;" onclick="SiparisOperasyon('+id+',\'aIptal\')"> REDDET </button>	</div>	<div  style="display:inline-block;width:49%"><button class="btn" style="background-color:#00D987;color:#fff;" onclick="SiparisOperasyon('+id+',\'aOnay\')"> ONAYLA </button>	</div></div>';
+	var divStr = '<input type="text" style="display:none" id="orderLat'+id+'" value="'+lat+'"><input type="text" style="display:none" id="orderLng'+id+'" value="'+lng+'"><div id="appOrder'+id+'">	<div id="appOrder'+id+'Title" onclick=\'toggleMe("'+id+'")\'> <span id="appOrder01Store" style="font-weight:bold">'+name+'</span>  <span id="appOrder01Time" style="font-size: 0.7em;">'+date+'</span> 	<span id="appOrder01Status">'+checkStr+'</span></div>	<div id="appOrder'+id+'Details" class="appOrderDetails" style="font-size: 0.8em;display:none"> <div><span><b> '+phone+' - </b></span><span> '+details+'</span>	</div><div id="map-canvas-siparis'+id+'" style="width:100%;height:255px;"></div>	<div>'+directions+'	</div>'+statusStr+'</div><hr></div>';
+	return divStr;
+}
+
+function OrderOnceOpened(id){
+	var orderLat = $("#orderLat"+id).val();
+	var orderLng = $("#orderLng"+id).val();
+	initializeSiparis(orderLat,orderLng,id);
+	
+}
+
+function toggleMe(orderDivId) {
+			 
+	 if($("#appOrder"+orderDivId+"Details").css("display")=="none"){
+		$(".appOrderDetails").slideUp(300);
+		$("#appOrder"+orderDivId+"Details").slideDown(300);
+		OrderOnceOpened(orderDivId);
+	 }
+	 else if($("#appOrder"+orderDivId+"Details").css("display")=="block"){
+		$(".appOrderDetails").slideUp(300);
+	 }
+
+ }
+ 
+ function SiparisOperasyon(siparisId,durum){
+	var postData = '{"aksiyon":"siparisOperasyon","data":{"siparisId":"'+siparisId+'","durum":"'+durum+'"}}';
+
+	
+	$.post("http://www.sagclick.com/BAKKALDAN/com/bakkaldan/DEBUG/debugger.php", { bilgi: postData}).done(
+		function(data){
+			var sonuc = JSON.parse(data);
+			if(sonuc.response==true){
+				SiparislerimiGetir();
+			}
+			else{
+				alert("Bir problem oluştu. Lütfen daha sonra tekrar deneyiniz.");
+			}
+		}
+	);
+ }
