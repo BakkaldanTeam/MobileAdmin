@@ -22,7 +22,7 @@ package com.phonegap.helloworld;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
-public class MainActivity extends CordovaActivity
+public class CordovaApp extends CordovaActivity
 {
     @Override
     public void onCreate(Bundle savedInstanceState)

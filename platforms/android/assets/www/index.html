@@ -47,7 +47,27 @@
 			google.maps.event.addDomListener(window, 'load', initialize);
 
 	    </script>
- 
+	    <script>
+			function initializeSiparis(lat,lng,id) {
+			  var myLatlng = new google.maps.LatLng(lat,lng);
+			  var mapOptions = {
+			    zoom: 16,
+			    center: myLatlng,
+				draggable: false
+			  }
+			  var map = new google.maps.Map(document.getElementById('map-canvas-siparis'+id), mapOptions);
+
+			  var marker = new google.maps.Marker({
+			      position: myLatlng,
+			      map: map,
+			      title: 'Siparis Haritası'
+			  });
+			}
+
+			google.maps.event.addDomListener(window, 'load', initializeSiparis);
+
+	    </script>
+	   
     
 </head>
 
@@ -217,6 +237,7 @@
 
 
     <section class="inAppSection" style="margin-top: 110px;display:none">
+    <div id="openClosed" style="position: absolute;right: 5%;margin-top: 60px;"><img id="tabela" src="assets/img/open.png"></div>
 
  <!-- -->  
             <div id="appAddress" class="inAppTabs container" style="display:none">
@@ -224,7 +245,7 @@
 		            <div onclick='' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;border-bottom-color:rgb(51, 51, 51);border-bottom-width:2px;  border-bottom-style:solid;">
 							<img src="assets/img/shop.png" style="width: 40px;">
 		            </div>
-		            <div onclick='$(".inAppTabs").hide();$("#appOrders").fadeIn();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
+		            <div onclick='$(".inAppTabs").hide();$("#appOrders").fadeIn();SiparislerimiGetir();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
 							<img src="assets/img/orders.png" style="width: 40px;">
 		            </div>
 		            <div onclick='$(".inAppTabs").hide();$("#appShop").fadeIn();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
@@ -232,7 +253,7 @@
 		            </div>
 		        </div>
 				<div id="appAddressBody" class="row" style="padding:0px 10%;margin-bottom:25px;">
-							<h1 style="margin: 10px 0px">Dükkanın</h1>
+							<h1 style="margin: 10px 0px">Dükkanın </h1>
 					        <div id="noMapText" style="margin: 10px 0px 40px 0px"> Dükkanın hakkında bilgiler</div>
 						     
 						     <div id="addNewAddress" style="margin-top:15px">
@@ -257,8 +278,145 @@
 								 	<p>
 									 	<span><b>E-Posta : </b></span>
 									 	<span id="proEmail"></span>
+								 	</p>
+								 	<hr>
+								 	<p>
+								 		<b>Servis  saatleri :</b>
+								 	</p>
+								 	<p>
+									 	<span>Açılış : </span>
+									 	<span style="margin-left:30px">
+											 <select id="basSaat">
+											  <option value="0">00:00</option>
+											  <option value="30">00:30</option>
+											  <option value="100">01:00</option>
+											  <option value="130">01:30</option>
+											  <option value="200">02:00</option>
+											  <option value="230">02:30</option>
+											  <option value="300">03:00</option>
+											  <option value="330">03:30</option>
+											  <option value="400">04:00</option>
+											  <option value="430">04:30</option>
+											  <option value="500">05:00</option>
+											  <option value="530">05:30</option>
+											  <option value="600">06:00</option>
+											  <option value="630">06:30</option>
+											  <option value="700">07:00</option>
+											  <option value="730">07:30</option>
+											  <option value="800">08:00</option>
+											  <option value="830">08:30</option>
+											  <option value="900">09:00</option>
+											  <option value="930">09:30</option>
+											  <option value="1000">10:00</option>
+											  <option value="1030">10:30</option>
+											  <option value="1100">11:00</option>
+											  <option value="1130">11:30</option>
+											  <option value="1200">12:00</option>
+											  <option value="1230">12:30</option>
+											  <option value="1300">13:00</option>
+											  <option value="1330">13:30</option>
+											  <option value="1400">14:00</option>
+											  <option value="1430">14:30</option>
+											  <option value="1500">15:00</option>
+											  <option value="1530">15:30</option>
+											  <option value="1600">16:00</option>
+											  <option value="1630">16:30</option>
+											  <option value="1700">17:00</option>
+											  <option value="1730">17:30</option>
+											  <option value="1800">18:00</option>
+											  <option value="1830">18:30</option>
+											  <option value="1900">19:00</option>
+											  <option value="1930">19:30</option>
+											  <option value="2000">20:00</option>
+											  <option value="2030">20:30</option>
+											  <option value="2100">21:00</option>
+											  <option value="2130">21:30</option>
+											  <option value="2200">22:00</option>
+											  <option value="2230">22:30</option>
+											  <option value="2300">23:00</option>
+											  <option value="2330">23:30</option>
+											</select>
+									 	</span>
+									 	<span style="margin-left:10px">
+									 		<button class="btn" onclick="AcikKapaliAyarlariGuncelle()" style="background-color:#429DFC;color:#fff;height:22px;padding:0px 5px;"> Güncelle </button>
+									 	</span>
+								 	</p>
+								 	<p>
+									 	<span>Kapanış : </span>
+									 	<span style="margin-left:10px">
+											 <select id="bitSaat">
+											  <option value="0">00:00</option>
+											  <option value="30">00:30</option>
+											  <option value="100">01:00</option>
+											  <option value="130">01:30</option>
+											  <option value="200">02:00</option>
+											  <option value="230">02:30</option>
+											  <option value="300">03:00</option>
+											  <option value="330">03:30</option>
+											  <option value="400">04:00</option>
+											  <option value="430">04:30</option>
+											  <option value="500">05:00</option>
+											  <option value="530">05:30</option>
+											  <option value="600">06:00</option>
+											  <option value="630">06:30</option>
+											  <option value="700">07:00</option>
+											  <option value="730">07:30</option>
+											  <option value="800">08:00</option>
+											  <option value="830">08:30</option>
+											  <option value="900">09:00</option>
+											  <option value="930">09:30</option>
+											  <option value="1000">10:00</option>
+											  <option value="1030">10:30</option>
+											  <option value="1100">11:00</option>
+											  <option value="1130">11:30</option>
+											  <option value="1200">12:00</option>
+											  <option value="1230">12:30</option>
+											  <option value="1300">13:00</option>
+											  <option value="1330">13:30</option>
+											  <option value="1400">14:00</option>
+											  <option value="1430">14:30</option>
+											  <option value="1500">15:00</option>
+											  <option value="1530">15:30</option>
+											  <option value="1600">16:00</option>
+											  <option value="1630">16:30</option>
+											  <option value="1700">17:00</option>
+											  <option value="1730">17:30</option>
+											  <option value="1800">18:00</option>
+											  <option value="1830">18:30</option>
+											  <option value="1900">19:00</option>
+											  <option value="1930">19:30</option>
+											  <option value="2000">20:00</option>
+											  <option value="2030">20:30</option>
+											  <option value="2100">21:00</option>
+											  <option value="2130">21:30</option>
+											  <option value="2200">22:00</option>
+											  <option value="2230">22:30</option>
+											  <option value="2300">23:00</option>
+											  <option value="2330">23:30</option>
+											</select>
+									 	</span>
+									 	<span style="margin-left:10px">
+									 		<button class="btn" onclick="AcikKapaliAyarlariGuncelle()" style="background-color:#429DFC;color:#fff;height:22px;padding:0px 5px;"> Güncelle </button>
+									 	</span>
+								 	</p>
+								 	<hr>								 	
+								 	<p>
+										<span id="gunluk" style="display:none">0</span>
+								 		<button class="btn btn-blue " id="gunlukBtn" onclick="AcikKapaliAyarlariGuncelle('gunluk')" style="width:100%;background-color:#693917"></button>
+								 	</p>
+								 	<p style="font-size: 0.8em;text-align:center">
+								 		! Dükkan ertesi sabah otomatik açılır ! 
+								 	</p>
+								 	<hr>								 	
+								 	<p>
+										<span id="komple" style="display:none">0</span>
+								 		<button class="btn btn-blue " id="kompleBtn" onclick="AcikKapaliAyarlariGuncelle('komple')" style="width:100%;background-color:#000000"></button>
+								 	</p>
+								 	<p style="font-size: 0.8em;text-align:center" >
+								 		! Dükkan sen açana kadar KAPALI kalır ! 
 								 	</p>								 
-								 </div>
+								 </div>																 
+								 
 								 
 						     </div>
 					        
@@ -279,72 +437,11 @@
 		        </div>
 				<div id="appOrdersBody" class="row" style="padding:0px 10%;margin-bottom:25px">
 					<h1 style="margin: 10px 0px">Siparişlerin</h1>
-					<div style="margin: 10px 0px  40px 0px"> Önceki siparişlerinin hepsi burada</div>
+					<div style="margin: 10px 0px  40px 0px"> Dükkanına gelen siparişler</div>
 					<div id="appOrdersList" style="margin: 10px 0px"> 
 						
 						
-						<div id="appOrder01"  style="  padding: 10px 0px;  border-bottom-color: rgb(119, 119, 119);  border-bottom-style: solid;  border-bottom-width: 1px;">
-							<div id="appOrder01Cancel" style="display:inline-block">
-								<button class="btn" style="margin: -4px 5px 0px 0px;background-color:#D94200;color:#fff;height:22px;padding:0px 5px;"> X </button>
-							</div>
-							<div id="appOrder01Title"  style="display:inline-block" > 
-
-									<span id="appOrder01Store" style="font-weight:bold">FIRAT YÜKSEK </span>  
-									<span id="appOrder01Time" style="font-size: 0.7em;"> 17:09, 12/12/2015</span> 
-									<span id="appOrder01Status">
-										<img style="width:14px;vertical-align:initial;" src="assets/img/check.png">
-									</span>
- 
-								
-							</div>
-							<div id="appOrder01Details" class="appOrderDetails" style="font-size: 0.7em;padding-left:20px"> 
-								<b> 555 555 5555 - </b> 2 Ekmek, 1 Kola, 1 Paket Şeker 
-								<div>
-								
-								</div>
-							</div>
-						</div>
-						
-						
-						<div id="appOrder02"  style="  padding: 10px 0px;  border-bottom-color: rgb(119, 119, 119);  border-bottom-style: solid;  border-bottom-width: 1px;">
-							<div id="appOrder02Cancel" style="display:inline-block">
-
-							</div>
-							
-							<div id="appOrder02Title" style="display:inline-block" > 
-
-									<span id="appOrder02Store" style="font-weight:bold">Güzel Şarküteri</span>   
-									<span id="appOrder02Time" style="font-size: 0.7em;"> 17:09, 12/12/2015</span> 
-									<span id="appOrder02Status">
-										<img  style="width:14px;vertical-align:initial;"  src="assets/img/check.png">
-										<img  style="width:14px;vertical-align:initial;"  src="assets/img/check.png">
-									</span> 
-
-							</div>
-							<div id="appOrder02Details" class="appOrderDetails" style="font-size: 0.7em;padding-left:20px"> 
-								<b>Adres 1 - </b> 1 Gazete, 1 Ekmek, 1 kg Peynir, yarım kilo zeytin
-							</div>
-						</div>					
-					
-						<div id="appOrder03"  style="  padding: 10px 0px;  border-bottom-color: rgb(119, 119, 119);  border-bottom-style: solid;  border-bottom-width: 1px;">
-							<div id="appOrder03Cancel" style="display:inline-block">
-
-							</div>
-							<div id="appOrder03Title" style="display:inline-block" > 
-
-									<span id="appOrder03Store" style="font-weight:bold">Yan Kasap</span>   
-									<span id="appOrder03Time" style="font-size: 0.7em;"> 17:09, 12/12/2015</span> 
-									<span id="appOrder03Status">
-										<img  style="width:14px;vertical-align:initial;"  src="assets/img/check.png">
-										<img  style="width:14px;vertical-align:initial;"  src="assets/img/check.png">
-									</span> 
-
-							</div>
-							<div id="appOrder03Details" class="appOrderDetails" style="font-size: 0.7em;padding-left:20px"> 
-								<b>Adres 1 - </b> 1 kilo dana kıyma
-							</div>
-						</div>						
-					
+																
 					</div>
 					
 				</div>
@@ -356,7 +453,7 @@
 		            <div onclick='$(".inAppTabs").hide();$("#appAddress").fadeIn();initialize();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
 							<img src="assets/img/shop.png" style="width: 40px;">
 		            </div>
-		            <div onclick='$(".inAppTabs").hide();$("#appOrders").fadeIn();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
+		            <div onclick='$(".inAppTabs").hide();$("#appOrders").fadeIn();SiparislerimiGetir();' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;">
 							<img src="assets/img/orders.png" style="width: 40px;">
 		            </div>
 		            <div onclick='' class="col-md-4" style="display:inline-block;width:32%;text-align:center;padding-bottom:5px;cursor:pointer;border-bottom-color:rgb(51, 51, 51);border-bottom-width:2px;  border-bottom-style:solid;">
